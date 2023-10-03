@@ -1,92 +1,60 @@
-# AWS transcribe
+# AWS Transcribe Service Configuration with CloudFormation, Lambda Function, and S3 Bucket Trigger
+
+This guide will walk you through the process of setting up AWS Transcribe service to automatically transcribe audio files uploaded to an S3 bucket using a Lambda function defined as Infrastructure as Code (IAC) using CloudFormation, and triggered by S3 events.
+
+### Prerequisites
+Before you begin, make sure you have the following:
+An AWS account.
+AWS CLI installed and configured with necessary permissions.
+Audio files that you want to transcribe.
+Basic understanding of AWS services.
+### Steps
+
+1. Create an S3 Bucket
+    1.1. Open the AWS Management Console.
+    1.2. Navigate to the S3 service.
+    1.3. Click on "Create bucket" and follow the prompts to create a new bucket. Choose a unique name and the appropriate region.
+
+2. Define Lambda Function in CloudFormation
+    2.1. Download a CloudFormation template “transcribe.yml” from the repository.
+
+3. Upload Lambda Function Code to S3
+    3.1. Copy code from the repository file name. “lambda_function.py”
+    3.2. Create a ZIP package of your Lambda function code (e.g., lambda_function.zip).
+    3.3. Upload the ZIP package to the S3 bucket you specified in the CloudFormation template.
+
+4. Create CloudFormation Stack
+    4.1. Open the AWS Management Console.
+    4.2. Navigate to the CloudFormation service.
+    4.3. Click on "Create stack".
+    4.4. Choose "Upload a template file" and upload the “transcribe.yml” template you Downloaded.
+    4.5. Follow the prompts to create the stack. 
+
+5. Configure S3 Trigger
+    5.1. Once the CloudFormation stack is created, navigate to the Lambda function you just created.
+    5.2. Add a trigger to the Lambda function.
+    5.3. Choose "S3" as the trigger type.
+    5.4. Configure the trigger:
+    - Bucket: Select the S3 bucket you created earlier.
+    - Event type: Choose "All object create events".
+    - Prefix: Leave this field empty to trigger on all object creations.
+    
+    5.5. Click on "Add" to add the trigger.
+    
+### Usage
+- Upload audio files to the configured S3 bucket.
+- The Lambda function defined in the CloudFormation stack will be triggered automatically for each uploaded file.
+- The Lambda function will start a Transcribe job for each file.
+- Monitor the progress of transcription jobs in the AWS Transcribe console.
+### Cleanup
+- Remember to clean up your resources if you no longer need them to avoid incurring unnecessary charges.
+
+As always, adapt the instructions to your specific requirements and refer to AWS documentation for the most up-to-date guidance.
 
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
-```
-cd existing_repo
-git remote add origin http://192.168.0.106/github-demo/aws/aws-transcribe.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](http://192.168.0.106/github-demo/aws/aws-transcribe/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
