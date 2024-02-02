@@ -1,3 +1,9 @@
+# Ownership Information:
+# - Company: BMV System Integration Pvt Ltd
+# - Author: Hardik Kalkani
+# - Version: 1.0
+# - Publish Date: 2023-10-03
+
 import boto3
 import uuid
 import json
@@ -23,8 +29,7 @@ def lambda_handler(event, context):
         Media={
             'MediaFileUri': s3Path
         },
-                OutputBucketName=s3bucket
-
+        OutputBucketName=s3bucket
     )
 
     print(json.dumps(response, default=str))
@@ -32,3 +37,4 @@ def lambda_handler(event, context):
     return {
         'TranscriptionJobName': response['TranscriptionJob']['TranscriptionJobName']
     }
+

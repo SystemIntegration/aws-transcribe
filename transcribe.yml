@@ -1,3 +1,9 @@
+################################################################################
+## CloudFormation Template for Lambda Function Triggered by S3 PutObject Event##
+## Author: BMV System Integration Pvt Ltd				      ##
+## Version: 1.0                                    			      ##
+## Publish Date: 2023-10-03                                                   ##
+################################################################################
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation Template for Lambda Function Triggered by S3 PutObject Event
 
